@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="userBase::layout(~{::section})">
+<head>
+<title>Title of the document</title>
+</head>
+
+<body>
+
+
+	<section>
+		<br>
+
+		<div class="container">
+
+			<form action="" th:action="@{/user/contact_process}" method="post"
+				enctype="multipart/form-data" th:object="${contact}">
+				<br>
+				<br>
+				<h3> Add Contact</h3>
+				<div th:if="${session.msg}" th:classappend="${session.msg.type}"
+						class="alert th:" role="alert">
+						<p th:text="${session.msg.content}"></p>
+						<th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+					</div>
+				<div class="form-group">
+					<label for="exampleFormControlInput1">Name</label> <input
+						type="text"
+						th:classappend="${#fields.hasErrors('name') ? 'is-invalid':''}"
+						class="form-control" id="exampleFormControlInput1" name="name"
+						required="required" placeholder="Your name"
+						th:value="${contact.name}">
+					<div id="validationServer03Feedback" class="invalid-feedback">
+						Please provide a valid city.</div>
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlInput2">Phone</label> <input
+						type="phone" class="form-control" id="exampleFormControlInput2"
+						name="phoneNumber" required="required" placeholder="Your Phone"
+						th:value="${contact.phoneNumber}">
+				</div>
+
+				<div class="form-group">
+					<label for="exampleFormControlInput3">Email</label> <input
+						type="email" class="form-control" id="exampleFormControlInput3"
+						name="cEmail" required="required" placeholder="Your email"
+						th:value="${contact.cEmail}">
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlInput4">work</label> <input
+						type="text" class="form-control" id="exampleFormControlInput3"
+						name="work" required="required" placeholder="Work"
+						th:value="${contact.work}">
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlTextarea1">Description</label>
+					<textarea class="form-control" id="exampleFormControlTextarea1"
+						name="description" rows="3" th:value="${contact.description}"></textarea>
+				</div>
+				<label for="inputGroupFile01">Image</label>
+				<div class="input-group mb-3 ">
+					<div class="custom-file form-control form-group">
+					
+						<input type="file"  name="imgUrl2" class="custom-file-input" id="inputGroupFile01">
+						<label class="custom-file-label" for="inputGroupFile01" >Choose
+							file</label>
+					</div>
+				</div>
+				
+
+				<div>
+					<button type="reset" class="btn btn-warning">reset</button>
+					<button type="submit" class="btn btn-info">save</button>
+				</div>
+				<br>
+			</form>
+		</div>
+	</section>
+</body>
+
+</html>

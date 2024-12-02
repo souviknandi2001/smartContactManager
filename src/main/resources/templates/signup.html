@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<title>Title of the document</title>
+</head>
+
+<body>
+
+
+	<section>
+		<br>
+
+		<div class="container">
+
+			<div class="row">
+				<div class="col"></div>
+				<div class="col-6 border border-info rounded ">
+					<br>
+					<div th:if="${session.msg}" th:classappend="${session.msg.type}"
+						class="alert th:" role="alert">
+						<p th:text="${session.msg.content}"></p>
+						<th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+					</div>
+					<form action="" th:action="@{/do_register}" method="post"
+						th:object="${user}">
+						<div class="form-group">
+							<label for="exampleFormControlInput1">Name</label> <input 
+								type="text" th:classappend="${#fields.hasErrors('name') ? 'is-invalid':''}"
+								class="form-control" id="exampleFormControlInput1"
+								name="name" required="required" placeholder="Your name"
+								th:value="${user.name}">
+							<div id="validationServer03Feedback" class="invalid-feedback">
+								Please provide a valid city.</div>
+						</div>
+
+						<div class="form-group">
+							<label for="exampleFormControlInput2">Email</label> <input
+								type="email" class="form-control" id="exampleFormControlInput2"
+								name="email" required="required" placeholder="Your email"
+								th:value="${user.email}">
+						</div>
+
+						<div class="form-group">
+							<label for="exampleFormControlInput3">Password</label> <input
+								type="password" class="form-control"
+								id="exampleFormControlInput3" name="password"
+								required="required" placeholder="password"
+								th:value="${user.password}">
+						</div>
+
+						<div class="form-group">
+							<label for="exampleFormControlTextarea1">About</label>
+							<textarea class="form-control" id="exampleFormControlTextarea1"
+								name="about" rows="3" th:value="${user.about}"></textarea>
+						</div>
+
+						<div>
+							<button type="reset" class="btn btn-warning">reset</button>
+							<button type="submit" class="btn btn-info">submit</button>
+						</div>
+						<br>
+					</form>
+				</div>
+				<div class="col"></div>
+			</div>
+
+
+		</div>
+	</section>
+</body>
+
+</html>

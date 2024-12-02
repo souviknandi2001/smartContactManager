@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="userBase::layout(~{::section})">
+<head>
+<title>Title of the document</title>
+</head>
+
+<body>
+
+
+	<section>
+		<br>
+
+		<div class="container">
+			<br> <br>
+
+			<div class="row">
+				<div class="col-md-4 pr-4">
+					<button type="button" class="btn btn-info">
+						My Contacts <span class="badge badge-light"
+							th:text="${totalrecords}"></span>
+					</button>
+				</div>
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<form class="form-inline my-2 my-lg-0 py-2">
+						<input class="form-control mr-sm-2" type="search"
+							placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+					</form>
+
+				</div>
+			</div>
+
+			<div th:if="${session.msg}" th:classappend="${session.msg.type}"
+				class="alert col-sm-12" role="alert">
+				<p th:text="${session.msg.content}"></p>
+				<th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+			</div>
+
+
+			<div class="col-md-12" th:each="c : ${contacts}">
+
+				<div class="card flex-md-row mb-4 box-shadow h-md-250">
+					<div class="card-body d-flex flex-column align-items-start">
+						<strong class="d-inline-block mb-2 text-success"
+							th:text="${c.work}"></strong>
+						<h3 class="mb-0">
+							<a class="text-dark" href="#" th:text="${c.name}"></a>
+						</h3>
+						<div class="mb-1 text-muted" th:text="${c.cEmail}"></div>
+						<div class="mb-1 text-muted" th:text="${c.phoneNumber}"></div>
+						<p class="card-text mb-auto" th:text="${c.description}"></p>
+						<div>
+							<a th:href="@{'/user/delete-contact/'+${c.CId}}"><button
+									type="submit" class="btn-danger">Delete</button></a>
+						    <a th:href="@{'/user/contact_update/'+${c.CId}}"><button
+									type="submit" class="btn-info">Update</button></a>
+						</div>
+					</div>
+					<img
+						class="card-img-right flex-auto d-none d-md-block p-4 rounded-circle"
+						data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]"
+						th:src="@{'/img/'+${c.imgUrl}}" data-holder-rendered="true"
+						style="width: 250px; height: 250px;">
+
+
+				</div>
+
+			</div>
+			<nav aria-label="Page navigation example" class="pr-3">
+				<ul class="pagination justify-content-end">
+					<li th:if="${currentpage!=0}" class="page-item "><a
+						class="page-link" th:href="'/user/show-contact/'+${currentpage-1}"
+						tabindex="-1">Previous</a></li>
+					<li class="page-item"
+						th:each="i : ${#numbers.sequence(1,totalpage)}"
+						th:classappend="${currentpage==i-1?'active':''}"><a
+						class="page-link" th:href="'/user/show-contact/'+${i-1}"><span
+							th:text="${i}"></span></a></li>
+					<li th:if="${currentpage+1!=totalpage}" class="page-item"><a
+						class="page-link" th:href="'/user/show-contact/'+${currentpage+1}">Next</a></li>
+				</ul>
+			</nav>
+		</div>
+	</section>
+</body>
+
+</html>
